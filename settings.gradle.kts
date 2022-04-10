@@ -22,4 +22,4 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "bom"
-include("lib")
+include(":lib")

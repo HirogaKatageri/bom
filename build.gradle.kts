@@ -10,5 +10,6 @@ buildscript {
 }
 
 tasks.register("clean", Delete::class) {
+    println("Deleting: ${rootProject.buildDir}")
     delete(rootProject.buildDir)
 }
