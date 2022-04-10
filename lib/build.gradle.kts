@@ -51,7 +51,7 @@ publishing {
 
             groupId = "dev.hirogakatageri"
             artifactId = "bom"
-            version = Versions.Bom.VERSION
+            version = getVersionFromTag
 
             pom {
                 name.set("Bill of Materials")
@@ -86,3 +86,18 @@ publishing {
         }
     }
 }
+
+val getVersionFromTag: String
+    get() {
+        val os = java.io.ByteArrayOutputStream()
+
+        project.exec {
+            commandLine("git", "tag", "--points-at", "HEAD")
+            standardOutput = os
+            isIgnoreExitValue = true
+        }
+
+        val version = os.toString("UTF-8").replace("\n", "")
+        return if (version.isNotBlank()) version
+        else throw RuntimeException("No Tag found at current commit")
+    }
